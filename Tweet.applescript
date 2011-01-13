@@ -5,8 +5,17 @@
 --  http://www.leancrew.com/all-this/2009/02/url-shortening-scripts-fixed-i-think/ by @drdrang (fix for &ampersand issues)
 --  put together and adapted by @ptujec to work with LaunchBar
 --  http://github.com/kuroir/Launchbar-Twitter-Tools for supertweet fix
-
+-- Twitter.app icon, Keychain support and goo.gl url shortening by @aristidesfl
 -----------------------------------------------------------------------
+
+--Instructions:
+--1. Create an account and choose a password at http://www.supertweet.net/ 
+--2. Open Keychain Access.app (it's in /Applications/Utilities/)
+--3. Create a new Item (plus button on the bottom) 
+--4. Add www.supertweet.net in the Account Name field and the password you chosen before in the Password field
+--5. Save this script in ~/Library/Application Support/Launchbar/Actions and call it Tweet
+--6. Open launchbar, start writing Tweet, press space, write your tweet and press enter
+
 
 -- take string from LaunchBar
 on handle_string(tweet)
