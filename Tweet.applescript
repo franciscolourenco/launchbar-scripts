@@ -8,7 +8,6 @@
 
 -----------------------------------------------------------------------
 
-
 -- take string from LaunchBar
 on handle_string(tweet)
 	
@@ -56,8 +55,14 @@ end tweetescape
 -- additional scripting for Growlnotificati
 using terms from application "GrowlHelperApp"
 	on growlRegister()
+		set appIcon to "Launchbar.app"
+		tell application "Finder"
+			if exists POSIX file "/Applications/Twitter.app" then
+				set appIcon to "Twitter.app"
+			end if
+		end tell
 		tell application "GrowlHelperApp"
-			register as application "Tweet" all notifications {"Alert"} default notifications {"Alert"} icon of application "Launchbar.app"
+			register as application "Tweet" all notifications {"Alert"} default notifications {"Alert"} icon of application appIcon
 		end tell
 	end growlRegister
 	on growlNotify(grrTitle, grrDescription)
