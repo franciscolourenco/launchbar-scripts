@@ -12,7 +12,7 @@
 --1. Create an account and choose a password at http://www.supertweet.net/ 
 --2. Open Keychain Access.app (it's in /Applications/Utilities/)
 --3. Create a new Item (plus button on the bottom) 
---4. Add www.supertweet.net in the Account Name field and the password you chosen before in the Password field
+--4. Fill the Keychain Item name with www.supertweet.net, the Account Name field with your twitter username and the Password with the password you have chosen before.
 --5. Save this script in ~/Library/Application Support/Launchbar/Actions and call it Tweet
 --6. Open launchbar, start writing Tweet, press space, write your tweet and press enter
 
