@@ -94,16 +94,16 @@ end try
 -- `curl` command returns the pastie.org variable "url_effective", which is the url of our pasted data
 try
 	set pastie_shell_script to "curl http://pastie.caboo.se/pastes/create -H 'Expect:' -F 'paste[parser]=plaintext' -F 'paste[body]=</tmp/" & short_username & "/pastie.txt' -F 'paste[authorization]=burger' -s -L -o /dev/null -w '%{url_effective}'"
-	set responseURL to (do shell script pastie_shell_script)
-	set the clipboard to responseURL -- Put the pastie.org url into the clipboard, nukes existing clipboard
-	growlNotify(responseURL) -- Show the user that the url is in the clipboard
-	tell application "LaunchBar"
-		set selection to responseURL
-	end tell
-	-- Log the url to a file
-	set shell_date to do shell script "date"
-	set log_cmd to "echo " & responseURL & "	" & shell_date & " >> ~/Library/Logs/" & growl_app_name & ".log"
-	do shell script log_cmd
+		set responseURL to (do shell script pastie_shell_script)
+	--	set the clipboard to responseURL -- Put the pastie.org url into the clipboard, nukes existing clipboard
+	--	growlNotify(responseURL) -- Show the user that the url is in the clipboard
+	--	tell application "LaunchBar"
+	--		set selection to responseURL
+	--	end tell
+	--	-- Log the url to a file
+	--	set shell_date to do shell script "date"
+	--	set log_cmd to "echo " & responseURL & "	" & shell_date & " >> ~/Library/Logs/" & growl_app_name & ".log"
+	--	do shell script log_cmd
 on error
 	display dialog "Posting to pastie.org failed." with title "pastie.org Error" with icon 0 buttons {"Shucks"} default button 1
 	return false -- halts from sending to pastie.org
