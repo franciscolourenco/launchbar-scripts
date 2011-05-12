@@ -202,7 +202,7 @@ on processurl(thename, dropboxID)
 		set AppleScript's text item delimiters to ""
 	end try
 	set theurl to "http://dl.getdropbox.com/u/" & dropboxID & "/" & thename
-	set curlCMD to "curl --stderr /dev/null \"http://tinyarro.ws/api-create.php?host=xn--l3h.ws" & suggest & "&utfpure=1&url=" & theurl & "\""
+	set curlCMD to "curl --stderr /dev/null \"http://tinyarro.ws/api-create.php?host=xn--cwg.ws" & suggest & "&utfpure=1&url=" & theurl & "\""
 	set theurl to (do shell script curlCMD)
 	set the clipboard to theurl
 	tell application "LaunchBar"
