@@ -5,9 +5,7 @@ set result to do shell script "diskutil mount " & diskname
 
 growlNotify("Diskutil", result)
 
-tell application "LaunchBar"
-	set selection to "/Volumes"
-end tell
+open location "x-launchbar:browse?path=/Volumes"
 
 -- additional scripting for Growlnotification 
 using terms from application "GrowlHelperApp"
@@ -22,8 +20,3 @@ using terms from application "GrowlHelperApp"
 		end tell
 	end growlNotify
 end using terms from
-
-tell application "LaunchBar"
-	set selection to "/Volumes"
-end tell
-
