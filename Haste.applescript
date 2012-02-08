@@ -24,7 +24,7 @@
 on handle_string(theText)
 	try
 		
-		set curlCMD to "echo '" & theText & "' | haste"
+		set curlCMD to "echo \"" & theText & "\" | haste"
 		set theURL to (do shell script curlCMD)
 		set the clipboard to theURL
 		tell application "LaunchBar"
