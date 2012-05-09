@@ -224,7 +224,7 @@ on processurl(thename, dropboxID)
 		set AppleScript's text item delimiters to ""
 	end try
 	set theurl to "http://dl.getdropbox.com/u/" & dropboxID & "/" & thename
-	set curlCMD to "curl -s -d \"&url=" & theurl & "\" http://goo.gl/api/url | egrep -o \"http://goo.gl/[^\\\"]*\""
+	set curlCMD to "curl -s https://www.googleapis.com/urlshortener/v1/url -H 'Content-Type: application/json' -d '{\"longUrl\": \"" & theurl & "\"}' | egrep -o 'http://goo.gl/[^\\\"]*'"
 	set theurl to (do shell script curlCMD)
 	set the clipboard to theurl
 	tell application "LaunchBar"
@@ -248,3 +248,4 @@ using terms from application "Growl"
 		end tell
 	end growlNotify
 end using terms from
+ 
