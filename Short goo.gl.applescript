@@ -21,8 +21,7 @@
 -- take string from LaunchBar
 on handle_string(theURL)
 	try
-	
-		set curlCMD to "curl -s https://www.googleapis.com/urlshortener/v1/url -H 'Content-Type: application/json' -d '{\"longUrl\": \""&theURL&"\"}' | egrep -o 'http://goo.gl/[^\\\"]*'"
+		set curlCMD to "curl -s https://www.googleapis.com/urlshortener/v1/url -H 'Content-Type: application/json' -d '{\"longUrl\": \"" & theURL & "\"}' | egrep -o 'http://goo.gl/[^\\\"]*'"
 		set theURL to (do shell script curlCMD)
 		set the clipboard to theURL
 		tell application "LaunchBar"
