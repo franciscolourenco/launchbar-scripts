@@ -23,8 +23,8 @@
 -- take string from LaunchBar
 on handle_string(theText)
 	try
-		
-		set curlCMD to "echo \"" & theText & "\" | haste"
+
+		set curlCMD to "echo " & quoted form of theText & " | haste"
 		set theURL to (do shell script curlCMD)
 		set the clipboard to theURL
 		tell application "LaunchBar"
@@ -40,7 +40,7 @@ end handle_string
 --take sting from a file
 on open (the_file)
 	try
-		set curlCMD to "cat " & ((POSIX path of the_file) as text) & " | haste"
+		set curlCMD to "haste < " & quoted form of ((POSIX path of the_file) as text)
 		set theURL to (do shell script curlCMD)
 		set the clipboard to theURL
 		tell application "LaunchBar"
