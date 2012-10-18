@@ -18,7 +18,7 @@ on handle_string(message)
 	tell application "LaunchBar"
 		
 		-- set time ... it's the last word of your string e.g. 'test 3' 
-		set delay_time to last word of message
+		set delay_time to first word of message
 		set future_message to message as text
 		
 		-- strip away last word of message
@@ -29,7 +29,7 @@ on handle_string(message)
 		if delay_time_length = message_length then
 			set future_message to "Ping"
 		else
-			set future_message to (characters 1 thru (message_length - delay_time_length) of future_message) as string
+			set future_message to (characters (delay_time_length + 2) thru message_length of future_message) as string
 		end if
 		
 		-- display it in large type
