@@ -11,20 +11,20 @@ property dropboxID : 4700116 --> Replace this number with your dropbox ID
 
 on run
 	try
-		
+
 		if application "Dropbox" is not running then launch application "Dropbox"
 		set ifolder to {path to home folder as string, "Dropbox:Public:"} as string
 		tell application "LaunchBar" to hide
-		
+
 		set {year:y, month:m, day:d, hours:h, minutes:m, seconds:s} to (current date)
 		set theDate to (h & "h" & m & "m" & s & "s")
-		
+
 		set theformat to "png"
 		set thename to "screenshot" & theDate & "." & theformat
 		set the_file to ""
 		set thecmd to my dupcheck(thename, ifolder, theformat, dropboxID, the_file)
-		
-		
+
+
 	on error e
 		tell me to activate
 		display dialog e
@@ -33,57 +33,57 @@ end run
 
 on open (the_file)
 	try
-		
+
 		if application "Dropbox" is not running then launch application "Dropbox"
 		set ifolder to {path to home folder as string, "Dropbox:Public:"} as string
-		
+
 		tell application "LaunchBar" to hide
 		try
 			--set text item delimiters to "."
 			--set theextension to last text item of (the_file as text)
-			
-			
+
+
 			set text item delimiters to ":"
 			set thename to last text item of (the_file as text)
 			set theformat to "file"
-			
-			
-			
+
+
+
 			if thename = "" then
 				set thename to text item ((count of text items of (the_file as text)) - 1) of (the_file as text)
 				set theformat to "folder"
 			end if
 			--display dialog the_file as text
-			
+
 			set suggest to "&suggest=" & thename
 			set text item delimiters to ""
 		on error
 			set text item delimiters to ""
 		end try
-		
-		
-		
-		
+
+
+
+
 		set thecmd to my dupcheck(thename, ifolder, theformat, dropboxID, the_file)
-		
-		
+
+
 	on error e
 		tell me to activate
 		display dialog e
 	end try
-	
-	
+
+
 end open
 
 on handle_string(thetext)
 	try
-		
-		
+
+
 		if application "Dropbox" is not running then launch application "Dropbox"
 		set ifolder to {path to home folder as string, "Dropbox:Public:"} as string
-		
+
 		tell application "LaunchBar" to hide
-		
+
 		set AppleScript's text item delimiters to ","
 		set thename to first text item of thetext
 		set theformat to false
@@ -96,7 +96,7 @@ on handle_string(thetext)
 		set suggest to "&suggest=" & thename
 		set the_file to ""
 		set thecmd to my dupcheck(thename, ifolder, theformat, dropboxID, the_file)
-		
+
 	on error e
 		tell me to activate
 		display dialog e
@@ -115,21 +115,21 @@ on dupcheck(thename, ifolder, theformat, dropboxID, the_file)
 		set thedupcheck to thedupcheck & ".zip"
 	end if
 	tell me to activate
-	
+
 	tell application "Finder" to if not (exists (POSIX path of thedupcheck) as POSIX file) then
-		--Changed Lines******************************************************	
+		--Changed Lines******************************************************
 		set thedecision to my processitem(thename, ifolder, theformat, dropboxID, the_file)
 	else
 		tell me to activate
 		set thedisplay to display dialog "An item with the name \"" & thename & "\" already exists in the destination" buttons {"Cancel ", "Rename", "Replace"} default button "Replace"
-		
+
 		if button returned of thedisplay is "Replace" then
 			my processreplace(thename, ifolder, theformat, dropboxID, the_file)
 		else if button returned of thedisplay is "Rename" then
 			my processrename(thename, ifolder, theformat, dropboxID, the_file)
 		else
 			return "Canceled"
-			
+
 		end if
 	end if
 end dupcheck
@@ -139,11 +139,11 @@ on processitem(thename, ifolder, theformat, dropboxID, the_file)
 	if theformat = "file" then
 		tell application "Finder" to copy file the_file to folder ifolder
 		growlNotify("Uploading file ", thename)
-		
+
 	else if theformat = "folder" then
 		--set text item delimiters to "."
 		--set theextension to "" --last text item of (thename as text)
-		
+
 		set thefileLess1 to text 1 thru -2 of POSIX path of the_file
 		set theReversedFileName to (reverse of (characters of thefileLess1)) as string
 		set theOffset to offset of "/" in theReversedFileName
@@ -154,10 +154,10 @@ on processitem(thename, ifolder, theformat, dropboxID, the_file)
 		--		display dialog the_file as text
 		--display dialog shellscript
 		do shell script shellscript
-		
+
 		set thename to thename & ".zip"
 		growlNotify("Uploading file ", thename)
-		
+
 	else if theformat = "filerename" then
 		set thecmd to "cp " & (POSIX path of the_file) & " " & (POSIX path of ifolder) & thename
 		do shell script thecmd
@@ -168,15 +168,15 @@ on processitem(thename, ifolder, theformat, dropboxID, the_file)
 		set thecmd to "screencapture -i -t " & theformat & " " & qifile
 		do shell script thecmd
 		growlNotify("Uploading screenshot ", thename)
-		
+
 	end if
 	my processurl(thename, dropboxID)
-	
-	
+
+
 end processitem
 
 on processreplace(thename, ifolder, theformat, dropboxID, the_file)
-	
+
 	set ifile to ifolder & thename
 	if theformat = "folder" then
 		set ifile to ifile & ".zip"
@@ -199,9 +199,9 @@ on processrename(thename, ifolder, theformat, dropboxID, the_file)
 			set thename to thename & "." & thenameextension
 		end if
 		set thenewcheck to ifolder & thename
-		
+
 		if theformat = "file" then set theformat to "filerename"
-		
+
 		tell application "Finder" to if not (exists (POSIX path of thenewcheck) as POSIX file) then
 			my processitem(thename, ifolder, theformat, dropboxID, the_file)
 			exit repeat
@@ -224,8 +224,8 @@ on processurl(thename, dropboxID)
 		set AppleScript's text item delimiters to ""
 	end try
 	set theurl to "http://dl.getdropbox.com/u/" & dropboxID & "/" & thename
-	set curlCMD to "curl -s https://www.googleapis.com/urlshortener/v1/url -H 'Content-Type: application/json' -d '{\"longUrl\": \"" & theurl & "\"}' | egrep -o 'http://goo.gl/[^\\\"]*'"
-	set theurl to (do shell script curlCMD)
+	--set curlCMD to "curl -s https://www.googleapis.com/urlshortener/v1/url -H 'Content-Type: application/json' -d '{\"longUrl\": \"" & theurl & "\"}' | egrep -o 'http://goo.gl/[^\\\"]*'"
+	--set theurl to (do shell script curlCMD)
 	set the clipboard to theurl
 	tell application "LaunchBar"
 		set selection as text to theurl
@@ -235,7 +235,7 @@ end processurl
 
 
 
--- additional scripting for Growlnotification 
+-- additional scripting for Growlnotification
 using terms from application "Growl"
 	on growlRegister()
 		tell application "Growl"
@@ -248,4 +248,3 @@ using terms from application "Growl"
 		end tell
 	end growlNotify
 end using terms from
- 
