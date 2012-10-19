@@ -3,10 +3,10 @@ My [Launchbar](http://www.obdev.at/products/launchbar/index.html) Scripts
 
 Most useful
 -----------
+* **Share Dropbox** - Pass it a file or a folder and get a dropbox public url. If you don't pass anything it will share a screenshot instead. You can specify the name of the screenshot by pressing space instead of return.
 * **Timer** - Enter a time interval followed by an optional message i.e. "15m pizza" and receive an alert after the time has passed.
-* **Share Dropbox** - Share something using dropbox and get a public url. (You have to edit the dropbox id inside the script)
-* **Haste** - Paste text or a file in hastebin and get a public url.
-* **Short goo.gl** - Shorten a url with google url shortener.
+* **Haste** - Pass it some text or a file and receive a hastebin.com public url.
+* **Short goo.gl** - Shorten a url with goo.gl.
 * **Show External Address** - Find out the ip address you are using on the internet.
 
 Others
