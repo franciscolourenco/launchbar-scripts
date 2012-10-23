@@ -61,9 +61,6 @@ on open (the_file)
 			set text item delimiters to ""
 		end try
 
-
-
-
 		set thecmd to my dupcheck(thename, ifolder, theformat, dropboxID, the_file)
 
 
@@ -110,26 +107,32 @@ end handle_string
 
 
 on dupcheck(thename, ifolder, theformat, dropboxID, the_file)
-	set thedupcheck to ifolder & thename
 	if theformat = "folder" then
-		set thedupcheck to thedupcheck & ".zip"
+		set finalname to thename & ".zip"
+	else
+		set finalname to thename
 	end if
-	tell me to activate
+	set thedupcheck to ifolder & finalname
 
-	tell application "Finder" to if not (exists (POSIX path of thedupcheck) as POSIX file) then
-		--Changed Lines******************************************************
-		set thedecision to my processitem(thename, ifolder, theformat, dropboxID, the_file)
+	if ifolder is in the_file as text then
+		processurl(finalname, dropboxID)
 	else
 		tell me to activate
-		set thedisplay to display dialog "An item with the name \"" & thename & "\" already exists in the destination" buttons {"Cancel ", "Rename", "Replace"} default button "Replace"
-
-		if button returned of thedisplay is "Replace" then
-			my processreplace(thename, ifolder, theformat, dropboxID, the_file)
-		else if button returned of thedisplay is "Rename" then
-			my processrename(thename, ifolder, theformat, dropboxID, the_file)
+		tell application "Finder" to if not (exists (POSIX path of thedupcheck) as POSIX file) then
+			--Changed Lines******************************************************
+			set thedecision to my processitem(thename, ifolder, theformat, dropboxID, the_file)
 		else
-			return "Canceled"
+			tell me to activate
+			set thedisplay to display dialog "An item with the name \"" & thename & "\" already exists in the destination" buttons {"Cancel ", "Rename", "Replace"} default button "Replace"
 
+			if button returned of thedisplay is "Replace" then
+				my processreplace(thename, ifolder, theformat, dropboxID, the_file)
+			else if button returned of thedisplay is "Rename" then
+				my processrename(thename, ifolder, theformat, dropboxID, the_file)
+			else
+				return "Canceled"
+
+			end if
 		end if
 	end if
 end dupcheck
