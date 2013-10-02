@@ -10,6 +10,7 @@ Favorite
 * **Timer** - Enter a time interval followed by an optional message i.e. "15m6s pizza" and receive an alert after the time has passed.
 * **Short goo.gl** - Shorten a url with goo.gl.
 * **Show IP External Address** - Find out the ip address you are using on the internet.
+* **Toggle Function Keys** - Toggles the function keys between F1,F2,F3... and Brightness,Media,Volume...
 * **Toggle Audio Output** - Used to Toggle between default audio output and bluetooth wireless connected to my hi-fi.
 
 
