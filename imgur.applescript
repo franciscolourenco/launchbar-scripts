@@ -44,9 +44,11 @@ on upload(image)
 	set link to text item 2 of answer
 	set AppleScript's text item delimiters to "<"
 	set link to text item 1 of link
+	set AppleScript's text item delimiters to "/"
+	set imageid to last text item of link
 	set AppleScript's text item delimiters to "."
 	set extension to last text item of image
-	set link to link & "." & extension
+	set link to "http://i.imgur.com/" & imageid & "." & extension
 	set AppleScript's text item delimiters to atid
 	--set browser to my default_Browser()
 	--tell application browser to open location link
