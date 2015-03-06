@@ -114,7 +114,7 @@ on dupcheck(thename, ifolder, theformat, dropboxID, the_file)
 	end if
 	set thedupcheck to ifolder & finalname
 
-	if ifolder is in the_file as text then
+	if ifolder is in (the_file as text) then
 		processurl(finalname, dropboxID)
 	else
 		tell me to activate
