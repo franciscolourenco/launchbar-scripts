@@ -22,50 +22,53 @@
 
 -- take string from LaunchBar
 on handle_string(theText)
-    try
-
-        set curlCMD to "echo " & quoted form of theText & " | curl -n -F 'f:1=<-' http://ix.io"
-        set theURL to (do shell script curlCMD)
-        set the clipboard to theURL
-        tell application "LaunchBar"
-            set selection as text to theURL
-            activate
-        end tell
-    on error e
-        my growlRegister()
-        growlNotify("Error", e)
-    end try
+	try
+		
+		set curlCMD to "echo " & quoted form of theText & " | curl -n -F 'content=<-' https://dpaste.de/api/?format=url"
+		set theURL to (do shell script curlCMD) as text
+		set the clipboard to theURL
+		tell application "LaunchBar"
+			set selection as text to theURL
+			activate
+		end tell
+	on error e
+		my growlRegister()
+		growlNotify("Error", e)
+	end try
 end handle_string
 
 --take sting from a file
 on open (the_file)
-    try
-        set curlCMD to "curl -n -F 'f:1=<-' http://ix.io < " & quoted form of ((POSIX path of the_file) as text)
-        set theURL to (do shell script curlCMD)
-        set the clipboard to theURL
-        tell application "LaunchBar"
-            set selection as text to theURL
-            activate
-        end tell
-    on error e
-        my growlRegister()
-        growlNotify("Error", e)
-    end try
+	
+	try
+		set text item delimiters to ":"
+		set file_name to last text item of (the_file as text)
+		set text item delimiters to ""
+		set curlCMD to "curl -n -F 'content=<-' \"https://dpaste.de/api/?format=url&lexer=&filename=" & file_name & "\" < " & quoted form of ((POSIX path of the_file) as text)
+		set theURL to (do shell script curlCMD) as text
+		set the clipboard to theURL
+		tell application "LaunchBar"
+			set selection as text to theURL
+			activate
+		end tell
+	on error e
+		my growlRegister()
+		growlNotify("Error", e)
+	end try
 end open
 
 
 -- additional scripting for Growlnotificati
 using terms from application "Growl"
-    on growlRegister()
-        set appIcon to "Launchbar.app"
-        tell application "Growl"
-            register as application "Hastebin" all notifications {"Alert"} default notifications {"Alert"} icon of application appIcon
-        end tell
-    end growlRegister
-    on growlNotify(grrTitle, grrDescription)
-        tell application "Growl"
-            notify with name "Alert" title grrTitle description grrDescription application name "Hastebin"
-        end tell
-    end growlNotify
+	on growlRegister()
+		set appIcon to "Launchbar.app"
+		tell application "Growl"
+			register as application "Hastebin" all notifications {"Alert"} default notifications {"Alert"} icon of application appIcon
+		end tell
+	end growlRegister
+	on growlNotify(grrTitle, grrDescription)
+		tell application "Growl"
+			notify with name "Alert" title grrTitle description grrDescription application name "Hastebin"
+		end tell
+	end growlNotify
 end using terms from
-te
