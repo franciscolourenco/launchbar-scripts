@@ -1,5 +1,6 @@
 on run
 	tell application "LaunchBar" to hide
+	delay 0.5 -- give time for Launchbar to hide
 	set theformat to "png"
 	--set {year:y, month:m, day:d, hours:h, minutes:m, seconds:s} to (current date)
 	--set theDate to (h & "h" & m & "m" & s & "s")
@@ -10,7 +11,7 @@ on run
 	do shell script thecmd
 	set link to my upload(ifile)
 	my finalize(link)
-	
+
 end run
 
 on open (input)
@@ -26,13 +27,13 @@ on open (input)
 		set end of thelist to (link & "
 ") as text
 	end repeat
-	
+
 	if (count thelist) is 1 then
 		my finalize(link)
 	else
 		my finalize(thelist as text)
 	end if
-	
+
 end open
 
 on upload(image)
